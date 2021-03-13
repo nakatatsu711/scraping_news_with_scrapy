@@ -74,7 +74,7 @@ ItemはSpiderが抜き出したデータを格納しておくためのオブジ�
 
 
 ### Pipelineの作成
-PipelineはSpiderから抽出したItemに対して任意の処理を行うためのコンポーネントです。  
+ItemPipeline（以下、Pipeline）はSpiderから抽出したItemに対して任意の処理を行うためのコンポーネントです。  
 `piplines.py`にクラスを作成することでPipelineを定義できます。`piplines.py`を好きなように書き換えてみてください。
 
 作成したPipelineを使用するためには、`settings.py`に設定を追加する必要があります。  
