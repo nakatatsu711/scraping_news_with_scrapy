@@ -49,7 +49,7 @@ DOWNLOAD_DELAY = 1
 Scrapyを使うのに、主に作成するのがSpiderというクラスです。  
 対象のWebサイトごとにSpiderを作成し、クローリングの設定やスクレイピングの処理を記述します。  
 
-scrapy genspiderコマンドであらかじめ定義されているテンプレートからSpiderを作成できます。  
+`scrapy genspider`コマンドであらかじめ定義されているテンプレートからSpiderを作成できます。  
 第1引数にSpiderの名前、第2引数にドメイン名を指定します。
 
 例えば、以下のコマンドでは`spiders`ディレクトリ内に`news_crawl.py`というファイルが作成されます。
