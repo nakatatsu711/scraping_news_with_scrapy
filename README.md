@@ -77,10 +77,54 @@ ITEM_PIPELINES = {
 }
 ```
 
+### 実行の流れ
+<img width="300" alt="scraping-news-with-scrapy-1" src="https://user-images.githubusercontent.com/62325937/128610987-1661844c-1eb2-480e-8b82-b6ec18694fc9.jpg">
+
+***
+`ScrapyEngine`：他のコンポーネントを制御する実行エンジン  
+`Scheduler`：Requestをキューに溜める  
+`Downloader`：Requestが指すURLのページを実際にダウンロードする  
+`Spider`：ダウンロードしたResponseを受け取り、ページからItemや次にたどるリンクを表すRequestを抜き出す  
+`FeedExporter`：Spiderが抜き出したItemをファイルなどに保存する  
+`ItemPipeline`：Spiderが抜き出したItemに関する処理を行う  
+`DownloaderMiddleware`：Downloaderの処理を拡張する  
+`SpiderMiddleware`：Spiderへの入力となるResponseやSpiderからの出力となるItemやRequestに対しての処理を拡張する
+***
+
+Spiderを実行すると、最初に`start_urls`属性に含まれるURLを指すRequestオブジェクトがScrapyのSchedulerに渡され、Webページの取得を待つキューに追加されます。
+
+キューに追加されたRequestオブジェクトは順にDownloaderに渡されます。  
+DownloaderはRequestオブジェクトに指定されたURLのページを取得し、Responseオブジェクトを作成します。
+
+Downloaderの処理が完了すると、ScrapyEngineがSpiderのコールバック関数を呼び出します。  
+デフォルトのコールバック関数はSpiderの`parse()`メソッドです。  
+コールバック関数には引数としてResponseオブジェクトが渡されるので、ここからリンクやデータを抽出します。
+
+コールバック関数では`yield`文で複数のオブジェクトを返せます。  
+リンクを抽出して次のページをクロールしたい場合は、Requestオブジェクトを`yield`します。  
+データを抽出したい場合は、Itemオブジェクトを`yield`します。  
+Requestオブジェクトをyieldした場合、再びSchedulerのキューに追加されます。  
+Itemオブジェクトを`yield`した場合、FeedExporterに送られ、ファイルなどに保存されます。
+
 
 ### 実行
 コマンドラインで実行します。  
 スクレイピングしたItemは`news_crawl.jl`というファイルに保存されます。
 ```
 $ scrapy crawl news_crawl -o news_crawl.jl
+```
+
+
+## 結果表示方法
+`news_crawl.jl`ファイルの中身はJSON Lines形式で、各行にJSONオブジェクトを持つテキスト形式となっています。
+
+日本語がエスケープされているので、`jq`コマンドで読めるようにします。  
+`jq`はmacOSの場合はHomebrewでインストールできます。
+```
+$ brew install jq
+```
+
+以下のコマンドを実行してください。
+```
+$ cat news_crawl.jl | jq .
 ```
