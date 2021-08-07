@@ -1,5 +1,5 @@
 ## 概要
-Scrapyでニュースサイトをスクレイピングするプログラム
+Scrapyでニュースサイトをスクレイピングするプログラムです。
 
 [Yahoo!ニュース](https://news.yahoo.co.jp/)と[gooニュース](https://news.goo.ne.jp/)から記事のタイトルと要約を取得します。
 
