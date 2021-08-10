@@ -49,7 +49,7 @@ DOWNLOAD_DELAY = 1
 Scrapyを使うのに、主に作成するのがSpiderというクラスです。  
 対象のWebサイトごとにSpiderを作成し、クローリングの設定やスクレイピングの処理を記述します。  
 
-`scrapy genspider`コマンドであらかじめ定義されているテンプレートからSpiderを作成できます。  
+scrapy genspiderコマンドであらかじめ定義されているテンプレートからSpiderを作成できます。  
 第1引数にSpiderの名前、第2引数にドメイン名を指定します。
 
 例えば、以下のコマンドでは`spiders`ディレクトリ内に`news_crawl.py`というファイルが作成されます。
@@ -97,14 +97,14 @@ Spiderを実行すると、最初に`start_urls`属性に含まれるURLを指�
 DownloaderはRequestオブジェクトに指定されたURLのページを取得し、Responseオブジェクトを作成します。
 
 Downloaderの処理が完了すると、ScrapyEngineがSpiderのコールバック関数を呼び出します。  
-デフォルトのコールバック関数はSpiderの`parse()`メソッドです。  
+デフォルトのコールバック関数はSpiderのparse()メソッドです。  
 コールバック関数には引数としてResponseオブジェクトが渡されるので、ここからリンクやデータを抽出します。
 
-コールバック関数では`yield`文で複数のオブジェクトを返せます。  
-リンクを抽出して次のページをクロールしたい場合は、Requestオブジェクトを`yield`します。  
-データを抽出したい場合は、Itemオブジェクトを`yield`します。  
+コールバック関数ではyield文で複数のオブジェクトを返せます。  
+リンクを抽出して次のページをクロールしたい場合は、Requestオブジェクトをyieldします。  
+データを抽出したい場合は、Itemオブジェクトをyieldします。  
 Requestオブジェクトをyieldした場合、再びSchedulerのキューに追加されます。  
-Itemオブジェクトを`yield`した場合、FeedExporterに送られ、ファイルなどに保存されます。
+Itemオブジェクトをyieldした場合、FeedExporterに送られ、ファイルなどに保存されます。
 
 
 ### 実行
@@ -118,8 +118,8 @@ $ scrapy crawl news_crawl -o news_crawl.jl
 ## 結果表示方法
 `news_crawl.jl`ファイルの中身はJSON Lines形式で、各行にJSONオブジェクトを持つテキスト形式となっています。
 
-日本語がエスケープされているので、`jq`コマンドで読めるようにします。  
-`jq`はmacOSの場合はHomebrewでインストールできます。
+日本語がエスケープされているので、jqコマンドで読めるようにします。  
+jqはmacOSの場合はHomebrewでインストールできます。
 ```
 $ brew install jq
 ```
