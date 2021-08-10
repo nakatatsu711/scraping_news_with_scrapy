@@ -91,7 +91,7 @@ ITEM_PIPELINES = {
 `SpiderMiddleware`：Spiderへの入力となるResponseやSpiderからの出力となるItemやRequestに対しての処理を拡張する
 ***
 
-Spiderを実行すると、最初に`start_urls`属性に含まれるURLを指すRequestオブジェクトがScrapyのSchedulerに渡され、Webページの取得を待つキューに追加されます。
+Spiderを実行すると、最初にstart_urls属性に含まれるURLを指すRequestオブジェクトがScrapyのSchedulerに渡され、Webページの取得を待つキューに追加されます。
 
 キューに追加されたRequestオブジェクトは順にDownloaderに渡されます。  
 DownloaderはRequestオブジェクトに指定されたURLのページを取得し、Responseオブジェクトを作成します。
